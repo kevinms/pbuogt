@@ -1,16 +1,62 @@
+Build pbuogt source
+	make all
 
-How to compile/run:
+Build tests
+	make build-tests
+
+Build plugins
+	cd plugins/
 	make
-	cd plugins
-	make
-	cd ..
-	./plug
 
+#################################
+####### pbuogt schematics #######
+#################################
 
----------OLD------------------------------------------------------------
-How to compile a plugin
-	gcc -o plugin.so -shared plugin.c
+net:
+    will house functions for setting up sockets
+parse:
+    disect each msg string into its components
+    to more easily deal with each msg
+com:
+    will maintain connections to N irc servers
+    pthreads
+    listening for the io process to connect
+io:
+    basically glues together the functionality from all the other files
+    parse msg
+    determine what should be done next and continue
+daemon:
+    be able to run pbuogt as a deamon
+list:
+    list management functions
+    create lists
+    add/delete/find/etc
+utils:
+    misc. functions
 
-How to compile pbuogt
-	The Makefile must have the ldflag: -ldl in order to support dynamic
-	library loading.
+#### Plugins ###
+webui:
+    show stats
+    list scripts [load/unload]
+    show peers
+    manage lists [ignore/admin/jargon]
+    manage connections
+    manage
+crypt:
+    look into this
+    let the peer communication be secure
+blocklist:
+    manage a block list
+    this needs to use a few regular expressions
+scripts:
+    need to figure out someway for lots of plugins to be run
+    this would NOT use fifo pipes
+stats:
+    uptime
+    # of commands issued
+    # of disconnects
+    # net splits
+    avg load of each pear
+    bot misuse (flooding)
+peer:
+    will let one bot 'peer' with another if it has a known fingerprint
