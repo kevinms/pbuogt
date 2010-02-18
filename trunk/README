@@ -1,0 +1,16 @@
+
+How to compile/run:
+	make
+	cd plugins
+	make
+	cd ..
+	./plug
+
+
+---------OLD------------------------------------------------------------
+How to compile a plugin
+	gcc -o plugin.so -shared plugin.c
+
+How to compile pbuogt
+	The Makefile must have the ldflag: -ldl in order to support dynamic
+	library loading.
