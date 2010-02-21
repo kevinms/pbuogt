@@ -20,6 +20,7 @@ main(int argc, char **argv)
 
 	list_t *l = list_init();
 	list_add(l,"webui.so");
+	list_add(l,"bob.so");
 
 	int i;
 	i = plugin_dlload_all(l);
@@ -28,14 +29,17 @@ main(int argc, char **argv)
 
 	struct plugin_t *plug = (struct plugin_t *)loaded_plugins->head->item;
 	(*(plug->load))();
-	(*(plug->unload))();
-
-	/* unload webui plugin */
+//	(*(plug->unload))();
+/*
 	plugin_dlunload(plug);
 	if(loaded_plugins->head == NULL)
 		fprintf(stderr,"Head is NULL\n");
 
 	list_del_item(loaded_plugins, loaded_plugins->head->item);
+*/
+
+	/* unload all plugins */
+	plugin_dlunload_all();
 
 	return 0;
 }

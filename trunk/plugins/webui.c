@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../plugins.h"
+#include "../plugin.h"
 
 struct plugin_info_t info = {
 	PBUOGT_MAJOR_VERSION,

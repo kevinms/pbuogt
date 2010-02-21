@@ -34,8 +34,11 @@ list_t *loaded_plugins;
 
 /* Manage plugins */
 int plugin_dlload_all(list_t *list);
+int plugin_dlunload_all();
+
 struct plugin_t *plugin_dlload(char *libname);
 void plugin_dlunload(struct plugin_t *plug);
+
 void plugin_free(struct plugin_t *plug);
 
 /* Available for use in plugins */

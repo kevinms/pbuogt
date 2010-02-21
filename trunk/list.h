@@ -16,23 +16,26 @@ typedef struct list_type
    link_t  *tail;           /* Last link in the list  */
 }  list_t;
 
-/* malloc a new list header and initialize it */
+/* list management */
 list_t *list_init(void);
-
-/* Add an element to the end of a list */
 void list_add(list_t *list, void *item);
-
-/* Delete an element from the list */
 void list_del_item(list_t *list, void *entity);
-
-/* Delete all of the list control structures and */
-/* the entities they control                     */
 void list_del(list_t *list);
-
-/* move tail to the head */
 void list_tail_to_head(list_t *list);
-
-/* move head to the tail */
 void list_head_to_tail(list_t *list);
+
+/* list iteration */
+link_t *g_link;
+
+void list_set_list_to_iterate(list_t *list);
+
+link_t *list_next_link();
+link_t *list_prev_link();
+link_t *list_peek_link();
+
+void *list_next_item();
+void *list_prev_item();
+void *list_peek_item();
+
 
 #endif /* !_LIST_H_ */

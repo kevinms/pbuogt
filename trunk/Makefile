@@ -2,10 +2,10 @@ CC=gcc
 CFLAGS=-g -Wall
 
 # Build bot
-LDFLAGS=-lpthread
-SOURCES=com.c io.c list.c utils.c
+LDFLAGS=-rdynamic -ldl
+SOURCES=pbuogt.c config.c plugin.c list.c utils.c
 OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=pbuogt-com pbuogt-io
+EXECUTABLE=pbuogt
 
 all: $(SOURCES) $(EXECUTABLE)
 

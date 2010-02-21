@@ -5,9 +5,11 @@
 
 #include "plugin.h"
 
+/* load all plugins that are in the list */
 int
 plugin_dlload_all(list_t *list)
 {
+	struct plugin_t *plug;
 	char buf[FILENAME_MAX] = PLUGIN_DIR;
 	int i = 0;
 
@@ -17,12 +19,19 @@ plugin_dlload_all(list_t *list)
 	if(list == NULL)
 		return -1;
 
-	link_t *tmp = list->head;
-	while(tmp!=NULL) {
-		strcat(buf,(char *)tmp->item);
-		list_add(loaded_plugins,plugin_dlload(buf));
-		tmp = tmp->next;
-		i++;
+	list_set_list_to_iterate(list);
+	while(list_peek_link()!=NULL) {
+		strcpy(buf,PLUGIN_DIR);
+		strcat(buf,(char *)list_peek_item());
+
+		plug = plugin_dlload(buf);
+
+		if(plug) {
+			list_add(loaded_plugins,plug);
+			i++;
+		}
+
+		list_next_link();
 	}
 
 	return i;
@@ -87,12 +96,27 @@ plugin_dlload(char *libname)
 	return plug;
 }
 
+int
+plugin_dlunload_all()
+{
+	int i = 0;
+
+	while(loaded_plugins->head) {
+		plugin_dlunload((struct plugin_t *)loaded_plugins->head->item);
+		i++;
+	}
+
+	return i;
+}
+
 void
 plugin_dlunload(struct plugin_t *plug)
 {
 	(*(plug->unload))();
 	dlclose(plug->handle);
 	plugin_free(plug);
+
+	list_del_item(loaded_plugins,plug);
 }
 
 void
