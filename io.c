@@ -21,18 +21,65 @@ int e_pipe, o_pipe, s_pipe;
 /* Even though it 'aint' a tree =] */
 char *tree[] = 
 {
+	"annkitty", "annkitty ftw!",
+	"dave", "<3 DAVE!",
+	"quigon", "I am really really really affectionate toward that guy!",
+	"LordShiva", "I wuv you, LordShiva!",
 	"agamalama", "ACTION Cuts agama's toe for making me spam!",
 	"flip", ".-.",
 	"sad", "º_º",
 	"happy", "=]",
 	"suprised", "O_O",
 	"dance", "<(^^<) ^(^^)^ (>^^)>",
+	"pughar", "Pronounced:  poo - gar",
+	"ohaii", "Oh Deer, ohaii",
+	"ohaiii", "The power of I times three!",
+	"ohaiiii", "The power of I times four!",
+	"ohaiiiii", "Ohaii taught everyone that with deers you, tickle2poo..",
+	"ohaiiiiii", "I like I's yes I do.",
+	"ohaiiiiiii", "1,2,3,lost_count,1,2,3,4,5,lost_count... ffs", 
+	"ohaiena", "Oh Deer, an Ohaiena!",
+	"ohawaii", "hawaii in ohaii",
+	"D", "Make up your mind!! Happy..or..Sad..?!?",
 	"\0"
 } ;
 
 list_t *ignore_list;
 list_t *admin_list;
 
+
+int search_match (char **tree, char *apple)
+{
+	int i = 0;
+	while (strcmp (apple, tree[i]) != 0)
+	{
+		i += 2;
+		if (strcmp ("\0", tree[i]) == 0)
+			return -1;
+	}
+	return i;
+}
+
+int list_lookup (list_t *list, char *name)
+{
+	link_t *temp;
+	temp = list->head;
+	while (temp != NULL)
+	{
+//#ifdef DEBUG
+		printf ("SET/%s\n", (char *)temp->item);
+		printf ("TOK/%s\n", name);
+//#endif
+		if (strstr (name, (char *)temp->item) != NULL)
+		{
+			//printf ("returning 1\n");
+			return 1;
+		}
+		temp = temp->next;
+	}
+	//printf ("returning 0\n");
+	return 0;
+}
 
 int init_fifo (char *name)
 {

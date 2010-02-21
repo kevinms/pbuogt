@@ -1,44 +1,30 @@
-CC=gcc
-CFLAGS=-g -Wall
+CC = gcc
+CCFLAGS = -g -Wall
+LIBS=-lpthread
+INCS=
 
-# Build bot
-LDFLAGS=-rdynamic -ldl
-SOURCES=pbuogt.c config.c plugin.c list.c utils.c
-OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=pbuogt
+all: pbuogt-com pbuogt-io
 
-all: $(SOURCES) $(EXECUTABLE)
+pbuogt-com: com.o list.o utils.o
+	${CC} ${CCFLAGS} -o pbuogt-com com.o list.o utils.o ${LIBS} ${INCS}
 
-$(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+pbuogt-io: io.o list.o utils.o
+	${CC} ${CCFLAGS} -o pbuogt-io io.o list.o utils.o ${LIBS} ${INCS}
 
-# Build tests
-T_CONFIG_SOURCES=config-test.c config.c list.c utils.c
-T_CONFIG_OBJECTS=$(T_CONFIG_SOURCES:.c=.o)
+io.o: io.o
+	${CC} ${CCFLAGS} -c io.c ${LIBS} ${INCS}
 
-T_PLUGIN_LDFLAGS=-rdynamic -ldl
-T_PLUGIN_SOURCES=plugin-test.c plugin.c list.c
-T_PLUGIN_OBJECTS=$(T_PLUGIN_SOURCES:.c=.o)
+com.o: com.c
+	${CC} ${CCFLAGS} -c com.c ${LIBS} ${INCS}
 
-T_SOURCES = $(T_CONFIG_SOURCES) $(T_PLUGIN_SOURCES)
-T_EXECUTABLE=test-config test-plugin
+list.o: list.c
+	${CC} ${CCFLAGS} -c list.c ${LIBS} ${INCS}
 
-build-tests: $(T_EXECUTABLE)
-	
+utils.o: utils.c
+	${CC} ${CCFLAGS} -c utils.c ${LIBS} ${INCS}
 
-test-config: $(T_CONFIG_OBJECTS)
-	$(CC) $(LDFLAGS) $(T_CONFIG_OBJECTS) -o $@
-
-test-plugin: $(T_PLUGIN_OBJECTS) 
-	$(CC) $(T_PLUGIN_LDFLAGS) $(T_PLUGIN_OBJECTS) -o $@
-
-# Implicit rule to compile all .c to .o
-.c.o:
-	$(CC) -c $(CFLAGS) $< -o $@
-
-# Cleanup rules
 clean:
-	rm -fv *.o $(EXECUTABLE) pbuogt-out pbuogt-event pbuogt-script
+	rm -fv *.o pbuogt-com pbuogt-io pbuogt-out pbuogt-event pbuogt-script
 
-clean-tests:
-	rm -fv *.o $(T_EXECUTABLE)
+io-clean:
+	rm -fv io.o pbuogt-io utils.o
