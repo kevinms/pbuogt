@@ -1,0 +1,42 @@
+# pbuogt schematics
+
+INTERNET
+  |  ^
+  v  |
+COM-HANDLER  -->  IN-FIFO
+  ^                  |
+  |                  v
+OUT-FIFO     <--  IO-HANDLER  <-- EXO-FIFO <-- <script>
+
+:COM-HANDLER
+	Maintains connections of networks and channels.
+	Writes all received data to the IN-FIFO.
+	Reads and sends the data from the OUT-FIFO.
+
+:IN-FIFO
+	Unhandled input
+
+:IO-HANDLER
+	Reads in one line at a time from the IN-FIFO.
+	Parses line and determines what, if anything, should be done.
+	Reads EXO-FIFO that will read in external data from scripts.
+
+:OUT-FIFO
+	
+
+:EXO-FIFO
+
+
+ToDo:
+	IO
+	Add a listento command
+	Add support for multiple owners
+	Find a different way to join a network upon starting the io process
+	Be able to send/receive private messages
+	Handle CTCP commands
+	Add timer to ignore spammers, show uptime, etc.
+	
+	COM
+	Add support for multiple networks
+	Add string to beginning of 'buf' so IO knows what network its from
+	
