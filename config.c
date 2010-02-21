@@ -166,8 +166,6 @@ config_read_value(FILE *in)
 {
 	int i = 0;
 
-	fprintf(stderr,"laskfjdas\n");
-
 	value[i] = fgetc(in);
 	while(i<BSIZE-1 && value[i]!='\n') {
 		i++;

@@ -1,6 +1,6 @@
 #include "list.h"
-#include <stdio.h>
 
+/* malloc a new list header and initialize it */
 list_t *
 list_init(void)
 {
@@ -14,6 +14,7 @@ list_init(void)
 	return newlist;
 }
 
+/* Add an element to the end of a list */
 void
 list_add(list_t *list, void *entity)
 {
@@ -32,6 +33,7 @@ list_add(list_t *list, void *entity)
 	}
 }
 
+/* Delete an element from the list */
 void
 list_del_item(list_t *list, void *item)
 {
@@ -62,6 +64,7 @@ list_del_item(list_t *list, void *item)
 	free(templink);
 }
 
+/* Delete all links and their items */
 void
 list_del(list_t *list)
 {
@@ -80,6 +83,7 @@ list_del(list_t *list)
 	free(list);
 }
 
+/* move tail to the head */
 void
 list_tail_to_head(list_t *list)
 {
@@ -95,6 +99,7 @@ list_tail_to_head(list_t *list)
 	}
 }
 
+/* move head to the tail */
 void
 list_head_to_tail(list_t *list)
 {
@@ -108,4 +113,75 @@ list_head_to_tail(list_t *list)
 		list->tail->next = NULL;
 		list->head->prev = NULL;
 	}
+}
+
+void
+list_set_list_to_iterate(list_t *list)
+{
+	if(list)
+		g_link = list->head;
+}
+
+link_t *
+list_next_link()
+{
+	if(g_link)
+		return ((g_link = g_link->next));
+
+	return NULL;
+}
+
+link_t *
+list_prev_link()
+{
+	if(g_link)
+		return((g_link = g_link->prev));
+
+	return NULL;
+}
+
+void *
+list_next_item()
+{
+	if(g_link)
+		g_link = g_link->next;
+	else
+		return NULL;
+
+	if(g_link)
+		return g_link->item;
+
+	return NULL;
+}
+
+void *
+list_prev_item()
+{
+	if(g_link)
+		g_link = g_link->prev;
+	else
+		return NULL;
+
+	if(g_link)
+		return g_link->prev;
+
+	return NULL;
+}
+
+void *
+list_peek_item()
+{
+	if(g_link)
+		return g_link->item;
+
+	return NULL;
+}
+
+link_t *
+list_peek_link()
+{
+	if(g_link)
+		return g_link;
+
+	return NULL;
 }

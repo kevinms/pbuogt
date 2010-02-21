@@ -1,3 +1,6 @@
+------------------------------------------------------------------------
+Build Instructions
+------------------------------------------------------------------------
 Build pbuogt source
 	make all
 
@@ -8,33 +11,38 @@ Build plugins
 	cd plugins/
 	make
 
-#################################
-####### pbuogt schematics #######
-#################################
-
+------------------------------------------------------------------------
+Main Bot Layout
+------------------------------------------------------------------------
 net:
-    will house functions for setting up sockets
+	will house functions for setting up sockets
 parse:
-    disect each msg string into its components
-    to more easily deal with each msg
+	disect each msg string into its components
+	to more easily deal with each msg
+plugin:
+	plugin API
+config:
+	loads configuration files
 com:
-    will maintain connections to N irc servers
-    pthreads
-    listening for the io process to connect
+	will maintain connections to N irc servers
+	pthreads
+	listening for the io process to connect
 io:
-    basically glues together the functionality from all the other files
-    parse msg
-    determine what should be done next and continue
+	basically glues together the functionality from all the other files
+	parse msg
+	determine what should be done next and continue
 daemon:
-    be able to run pbuogt as a deamon
+	be able to run pbuogt as a deamon
 list:
-    list management functions
-    create lists
-    add/delete/find/etc
+	list management functions
+	create lists
+	add/delete/find/etc
 utils:
-    misc. functions
+	misc. functions
 
-#### Plugins ###
+------------------------------------------------------------------------
+Plugin List
+------------------------------------------------------------------------
 webui:
     show stats
     list scripts [load/unload]
